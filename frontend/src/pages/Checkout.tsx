@@ -4,6 +4,8 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 
+import axios from "axios"
+
 export default function Checkout() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -15,7 +17,7 @@ export default function Checkout() {
 
       const token = localStorage.getItem("token")
 
-      const res = await api.post(
+      await api.post(
         "/checkout",
         {},
         {
@@ -33,13 +35,16 @@ export default function Checkout() {
       navigate("/orders")
 
     } catch (error) {
-      console.log("CHECKOUT ERROR:", error)
-      console.log("RESPONSE:", error?.res?.data)
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data)
 
-      alert(
-        error?.res?.data?.message ||
-        "Order failed"
-      )
+        alert(
+          error.response?.data?.message ||
+          "Order failed"
+        )
+      } else {
+        alert("An unexpected error occurred")
+      }
     } finally {
       setLoading(false)
     }

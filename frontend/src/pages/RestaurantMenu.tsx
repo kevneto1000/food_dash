@@ -11,7 +11,7 @@ export default function RestaurantMenu() {
   const [search, setSearch] = useState("")
   const [foods, setFoods] = useState<Food[]>([])
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
-  const { cartCount, setCartCount } = useCart()
+  const { setCartCount } = useCart()
 
   const filteredFoods = foods.filter((food: any) =>
     food.name
