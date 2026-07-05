@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react";
 import api from "../api/axios"
 import toast from "react-hot-toast"
 
@@ -7,6 +7,16 @@ export default function ManageRestaurants() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState("")
+    const [restaurants, setRestaurants] = useState<any[]>([])
+
+    const fetchRestaurants = async () => {
+        try {
+            const res = await api.get("/restaurants")
+            setRestaurants(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const createRestaurant = async () => {
         try {
@@ -23,10 +33,17 @@ export default function ManageRestaurants() {
             setName("")
             setDescription("")
             setImage("")
+
+            fetchRestaurants()
+
         } catch(error) {
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        fetchRestaurants()
+    }, [])
 
     return (
         <div className="max-w-7xl mx-auto px-6 py-10">
@@ -116,6 +133,23 @@ export default function ManageRestaurants() {
                         Create Restaurant                        
                     </button>
                 </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {restaurants.map((restaurant: any) => (
+                    <div key={restaurant.id} className="bg-white rounded-lg shadow p-4">
+                        <img
+                            src={restaurant.image}
+                            className="w-full h-48 object-cover rounded-lg"
+                        />
+
+                        <h2 className="font-bold text-xl mt-3">{restaurant.name}</h2>
+
+                        <p className="text-gray-500 mt-2">
+                            {restaurant.description}
+                        </p>
+                    </div>
+                ))}
             </div>
         </div>
     )
