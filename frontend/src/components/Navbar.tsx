@@ -108,6 +108,13 @@ export default function Navbar() {
                 >
                   Manage Foods
                 </Link>
+
+                <Link
+                  to="/admin/restaurants"
+                  className="text-gray-700 hover:text-green-500 font-medium transition"
+                >
+                  Manage Restaurants
+                </Link>
               </>
             )}
 
