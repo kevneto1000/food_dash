@@ -10,6 +10,7 @@ import Signup from "../pages/Signup"
 import AdminOrders from "../pages/AdminOrders"
 import AdminFoods from "../pages/AdminFoods"
 import AdminDashboard from "../pages/AdminDashboard"
+import ManageRestaurants from "../pages/ManageRestaurants"
 
 export default function AppRoutes() {
   return (
@@ -25,7 +26,7 @@ export default function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/admin/foods" element={<AdminFoods />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-
+        <Route path="/admin/restaurants" element={<ManageRestaurants />} />
       </Routes>
   )
 }
