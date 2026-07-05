@@ -31,16 +31,10 @@ export default function RestaurantMenu() {
 
   const addToCart = async (foodId: string) => {
     try {
-      const token = localStorage.getItem("token")
 
       await api.post(
         "/cart",
-        { foodId, quantity: 1 },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        { foodId, quantity: 1 }
       )
 
       toast.success("Added to cart")

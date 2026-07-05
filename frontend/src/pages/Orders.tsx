@@ -8,13 +8,8 @@ export default function Orders() {
 
   const fetchOrders = async () => {
     try {
-      const token = localStorage.getItem("token");
 
-      const res = await api.get("/orders/my-orders", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await api.get("/orders/my-orders");
 
       toast.success("Order status updated")
       console.log("ORDERS:", res.data);

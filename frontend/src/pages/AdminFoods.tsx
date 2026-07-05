@@ -31,7 +31,6 @@ export default function AdminFoods() {
 
   const createFood = async () => {
     try {
-        const token = localStorage.getItem("token")
 
         await api.post(
         "/foods",
@@ -41,11 +40,6 @@ export default function AdminFoods() {
             description,
             image,
             restaurantId
-        },
-        {
-            headers: {
-            Authorization: `Bearer ${token}`
-            }
         }
         )
 

@@ -28,16 +28,10 @@ export default function AdminOrders() {
 
   const updateStatus = async (orderId: string, status: string) => {
     try {
-      const token = localStorage.getItem("token");
 
       await api.patch(
         `/orders/${orderId}/status`,
-        { status },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        { status }
       );
 
       fetchOrders();

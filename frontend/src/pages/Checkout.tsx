@@ -15,16 +15,9 @@ export default function Checkout() {
     try {
       setLoading(true)
 
-      const token = localStorage.getItem("token")
-
       await api.post(
         "/checkout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        {}
       )
 
       // reset cart badge

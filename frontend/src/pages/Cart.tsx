@@ -29,7 +29,6 @@ export default function Cart() {
     foodId: string,
     action: "increase" | "decrease",
   ) => {
-    const token = localStorage.getItem("token");
 
     if (action === "increase") {
       setCartCount((prev) => prev + 1);
@@ -44,12 +43,7 @@ export default function Cart() {
       {
         foodId,
         action,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+      }
     );
 
     fetchCart();
