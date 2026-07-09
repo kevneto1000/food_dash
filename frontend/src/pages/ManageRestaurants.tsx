@@ -38,6 +38,34 @@ export default function ManageRestaurants() {
 
         } catch(error) {
             console.log(error)
+            toast.error("Failed to create restaurant")
+        }
+    }
+
+    const deleteRestaurant = async (id: string) => {
+        try {
+            const token = localStorage.getItem("token")
+
+            const confirmed = window.confirm(
+                "Are you sure you want to delete this restaurant?"
+            )
+
+            if (!confirmed) {
+                return
+            }
+
+            await api.delete(`/restaurants/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            toast.success("Restaurant deleted")
+
+            fetchRestaurants()
+        }catch(error) {
+            console.log(error)
+            toast.error("Failed to delete restaurant")
         }
     }
 
@@ -148,6 +176,21 @@ export default function ManageRestaurants() {
                         <p className="text-gray-500 mt-2">
                             {restaurant.description}
                         </p>
+
+                        <div className="flex gap-3 mt-5">
+                            <button
+                                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg cursor-pointer transition"
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                onClick={() => deleteRestaurant(restaurant.id)}
+                                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg cursor-pointer transition"
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>

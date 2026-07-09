@@ -55,6 +55,7 @@ export default function AdminFoods() {
 
     } catch (error) {
         console.log(error)
+        toast.error("Failed to create food")
     }
   }
 
@@ -79,6 +80,7 @@ export default function AdminFoods() {
       fetchFoods();
     } catch (error) {
       console.log(error);
+      toast.error("Failed to update food")
     }
   };
 
