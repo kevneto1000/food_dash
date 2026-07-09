@@ -71,7 +71,6 @@ export default function ManageRestaurants() {
     }
 
     const editRestaurant = (restaurant: any) => {
-        console.log("EDIT CLICKED", restaurant)
 
         setEditingId(restaurant.id)
         setName(restaurant.name)
@@ -85,7 +84,7 @@ export default function ManageRestaurants() {
 
     return (
         <div className="max-w-7xl mx-auto px-6 py-10">
-            <h1 className="text-3xl font-bold mb-8 text-red-600">TEST PAGE 123 🏢</h1>
+            <h1 className="text-3xl font-bold mb-8">Manage Restaurants 🏢</h1>
 
             <div className="bg-white rounded-3xl shadow-lg p-8 mb-10">
                 {/* Header */}
@@ -189,7 +188,7 @@ export default function ManageRestaurants() {
 
                         <div className="flex gap-3 mt-5">
                             <button
-                                onClick={() => alert("Edit button clicked")}
+                                onClick={() => editRestaurant(restaurant)}
                                 className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg cursor-pointer transition"
                             >
                                 Edit
