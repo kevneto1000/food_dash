@@ -189,7 +189,7 @@ export default function ManageRestaurants() {
 
                         <div className="flex gap-3 mt-5">
                             <button
-                                onClick={() => editRestaurant(restaurant)}
+                                onClick={() => alert("Edit button clicked")}
                                 className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg cursor-pointer transition"
                             >
                                 Edit
