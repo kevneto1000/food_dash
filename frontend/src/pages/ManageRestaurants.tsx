@@ -167,7 +167,7 @@ export default function ManageRestaurants() {
                         onClick={createRestaurant}
                         className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition cursor-pointer"
                     >
-                        Create Restaurant                        
+                        { editingId ? "Update Restaurant" : "Create Restaurant" }                       
                     </button>
                 </div>
             </div>
