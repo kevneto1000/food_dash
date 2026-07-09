@@ -71,6 +71,8 @@ export default function ManageRestaurants() {
     }
 
     const editRestaurant = (restaurant: any) => {
+        console.log("EDIT CLICKED", restaurant)
+
         setEditingId(restaurant.id)
         setName(restaurant.name)
         setDescription(restaurant.description)
