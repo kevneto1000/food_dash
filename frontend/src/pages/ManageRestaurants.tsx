@@ -8,6 +8,7 @@ export default function ManageRestaurants() {
     const [description, setDescription] = useState("")
     const [image, setImage] = useState("")
     const [restaurants, setRestaurants] = useState<any[]>([])
+    const [editingId, setEditingId] = useState<string | null>(null)
 
     const fetchRestaurants = async () => {
         try {
@@ -67,6 +68,13 @@ export default function ManageRestaurants() {
             console.log(error)
             toast.error("Failed to delete restaurant")
         }
+    }
+
+    const editRestaurant = (restaurant: any) => {
+        setEditingId(restaurant.id)
+        setName(restaurant.name)
+        setDescription(restaurant.description)
+        setImage(restaurant.image)
     }
 
     useEffect(() => {
@@ -179,6 +187,7 @@ export default function ManageRestaurants() {
 
                         <div className="flex gap-3 mt-5">
                             <button
+                                onClick={() => editRestaurant(restaurant)}
                                 className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg cursor-pointer transition"
                             >
                                 Edit
