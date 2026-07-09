@@ -85,7 +85,7 @@ export default function ManageRestaurants() {
 
     return (
         <div className="max-w-7xl mx-auto px-6 py-10">
-            <h1 className="text-3xl font-bold mb-8">Manage Restaurants 🏢</h1>
+            <h1 className="text-3xl font-bold mb-8 text-red-600">TEST PAGE 123 🏢</h1>
 
             <div className="bg-white rounded-3xl shadow-lg p-8 mb-10">
                 {/* Header */}
