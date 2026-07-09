@@ -21,8 +21,8 @@ model Restaurant {
   id          String   @id @default(uuid())
   name        String
   createdAt   DateTime @default(now())
-  description String?
   image       String?
+  description String?
   foods       Food[]
 }
 
@@ -57,5 +57,4 @@ model OrderItem {
   price    Float
   food     Food   @relation(fields: [foodId], references: [id])
   order    Order  @relation(fields: [orderId], references: [id])
-
 }

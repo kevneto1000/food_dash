@@ -36,12 +36,15 @@ export const register = async (req: Request, res: Response) => {
 
 // LOGIN
 export const login = async (req: Request, res: Response) => {
+  console.log("LOGIN CONTROLLER HIT");
   try {
     const { email, password } = req.body
 
     const user = await prisma.user.findUnique({
       where: { email }
     })
+
+    console.log(user);
 
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" })
@@ -68,6 +71,7 @@ export const login = async (req: Request, res: Response) => {
       }
     })
   } catch (err) {
+    console.error(err)
     res.status(500).json({ error: err })
   }
 }
