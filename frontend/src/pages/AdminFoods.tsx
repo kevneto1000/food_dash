@@ -3,6 +3,7 @@ import api from "../api/axios"
 import toast from "react-hot-toast"
 
 export default function AdminFoods() {
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [foods, setFoods] = useState<any[]>([])
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
@@ -84,6 +85,72 @@ export default function AdminFoods() {
     }
   };
 
+  const editFood = (food: any) => {
+    setEditingId(food.id)
+    setName(food.name)
+    setPrice(food.price.toString())
+    setDescription(food.description)
+    setImage(food.image)
+    setRestaurantId(food.restaurantId)
+  }
+
+  const updateFood = async () => {
+    try {
+      const token = localStorage.getItem("token")
+
+      await api.put(`/foods/${editingId}`, {
+        name, 
+        price: Number(price),
+        description,
+        image,
+        restaurantId
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      toast.success("Food updated successfully")
+
+      setEditingId(null)
+      setName("")
+      setPrice("")
+      setDescription("")
+      setRestaurantId("")
+      setImage("")
+
+      fetchFoods()
+    } catch(error) {
+      console.log(error)
+      toast.error("Failed to update food")
+    }
+  }
+
+  const deleteFood = async (id: string) => {
+    try {
+      const token = localStorage.getItem("token")
+
+      const confirmed = window.confirm("Are you sure you want to delete this food?")
+
+      if(!confirmed) {
+        return;
+      }
+
+      await api.delete(`/foods/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      toast.success("Food has been deleted")
+
+      fetchFoods()
+    } catch(error) {
+      console.log(error)
+      toast.error("Failed to delete food")
+    }
+  }
+
   useEffect(() => {
     fetchFoods()
     fetchRestaurants()
@@ -96,7 +163,7 @@ export default function AdminFoods() {
       <div className="bg-white rounded-3xl shadow-lg p-8 mb-10">
         {/* Header */}
         <div className="mb-8">
-          <h2 className="text-3xl font-bold">Add New Food 🍔</h2>
+          <h2 className="text-3xl font-bold">{editingId ? "Edit Food 🍔" : "Add New Food 🍔"}</h2>
 
           <p className="text-gray-500 mt-2">
             Create a new menu item for your restaurants
@@ -182,7 +249,7 @@ export default function AdminFoods() {
                   image ||
                   "https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
                 }
-                className="w-full h-64 object-cover rounded-xl"
+                className="w-full h-74 object-cover rounded-xl"
               />
 
               <h3 className="font-bold text-xl mt-4">{name || "Food Name"}</h3>
@@ -201,10 +268,10 @@ export default function AdminFoods() {
         {/* BUTTON */}
         <div className="mt-8 flex justify-end">
           <button
-            onClick={createFood}
+            onClick={ editingId ? updateFood : createFood }
             className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition cursor-pointer"
           >
-            Create Food
+            { editingId ? "Update Food" : "Create Food" }
           </button>
         </div>
       </div>
@@ -214,7 +281,7 @@ export default function AdminFoods() {
           <div key={food.id} className="bg-white rounded-lg shadow p-4">
             <img
               src={food.image}
-              className="w-full h-48 object-cover rounded-lg"
+              className="w-full h-58 object-cover rounded-lg"
             />
 
             <h2 className="font-bold text-xl mt-3">{food.name}</h2>
@@ -239,6 +306,21 @@ export default function AdminFoods() {
             >
               {food.available ? "Mark Unavailable" : "Mark Available"}
             </button>
+            <div className="flex gap-3 mt-2">
+              <button 
+                onClick={() => editFood(food)}
+                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg cursor-pointer transition"
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => deleteFood(food.id)}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg cursor-pointer transition"
+              >
+                  Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
