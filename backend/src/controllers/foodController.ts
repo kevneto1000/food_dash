@@ -113,11 +113,11 @@ export const deleteFood = async (req: Request,res: Response) => {
       req.params.id as string
 
     const existingOrderItems =
-      await prisma.orderItem.findMany({
+      await prisma.orderItem.findFirst({
         where: { foodId: id }
       })
 
-    if (existingOrderItems.length > 0) {
+    if (existingOrderItems) {
       return res.status(400).json({
         message:
           "Cannot delete food already used in orders"
