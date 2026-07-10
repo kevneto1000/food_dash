@@ -78,6 +78,34 @@ export default function ManageRestaurants() {
         setImage(restaurant.image)
     }
 
+    const updateRestaurant = async () => {
+        try {
+            const token = localStorage.getItem("token")
+
+            await api.put(`/restaurants/${editingId}`, {
+                name, 
+                description,
+                image
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            toast.success("Restaurant updated")
+
+            setEditingId(null)
+            setName("")
+            setDescription("")
+            setImage("")
+
+            fetchRestaurants()
+        } catch(error) {
+            console.log(error)
+            toast.error("Failed to update restaurant")
+        }
+    }
+
     useEffect(() => {
         fetchRestaurants()
     }, [])
@@ -164,7 +192,7 @@ export default function ManageRestaurants() {
                 {/* Button */}
                 <div className="mt-8 flex justify-end">
                     <button
-                        onClick={createRestaurant}
+                        onClick={editingId ? updateRestaurant : createRestaurant}
                         className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition cursor-pointer"
                     >
                         { editingId ? "Update Restaurant" : "Create Restaurant" }                       
